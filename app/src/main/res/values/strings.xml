@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Note</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="draft">Draft</string>
+    <string name="notes">Notes</string>
+    <string name="drafts">Drafts</string>
+</resources>
