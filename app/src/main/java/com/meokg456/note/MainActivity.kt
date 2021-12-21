@@ -1,5 +1,6 @@
 package com.meokg456.note
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -13,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.meokg456.note.databinding.ActivityMainBinding
 import com.meokg456.note.model.NotesModel
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.recyclerview.widget.RecyclerView
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +24,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initBottomNavigation()
+
+    }
+
+    fun onAddNewNoteClick(view: android.view.View) {
+        val intent = Intent(this, NoteDetail::class.java)
+        startActivity(intent)
+    }
+
+    private fun initBottomNavigation() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -38,4 +50,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
+
 }

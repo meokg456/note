@@ -10,4 +10,9 @@
         android:layout_height="match_parent"
         android:text="@string/drafts" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/draft_list"/>
+
 </FrameLayout>
