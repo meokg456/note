@@ -1,5 +1,6 @@
 package com.meokg456.note
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.view.LayoutInflater
@@ -26,6 +27,7 @@ class NoteAdapter(private val data: List<Note>) : RecyclerView.Adapter<NoteAdapt
             // Define click listener for the ViewHolder's View.
         }
 
+        @SuppressLint("SimpleDateFormat")
         fun bind(note: Note) {
             titleTextView.text = note.title
             currentNote = note

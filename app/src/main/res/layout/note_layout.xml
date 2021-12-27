@@ -56,7 +56,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_share"
-        android:layout_margin="8sp"/>
+        android:layout_margin="8sp"
+        android:contentDescription="@string/share" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
