@@ -1,13 +1,13 @@
-package com.meokg456.note.model
+package com.meokg456.note.datasource
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.meokg456.note.core.Note
+import com.meokg456.note.model.Note
+import com.meokg456.note.uistate.NoteUiState
 import java.util.*
+import javax.inject.Inject
 
-class NotesModel : ViewModel() {
-    val notes = MutableLiveData<List<Note>>(
-        listOf(
+class NoteDAO @Inject constructor() {
+    fun getNotes(): List<Note> {
+        return listOf(
             Note(
                 id = 1,
                 title = "Fragment",
@@ -23,23 +23,23 @@ class NotesModel : ViewModel() {
                 modifiedAt = Calendar.getInstance().time
             )
         )
-    )
-    val drafts = MutableLiveData<List<Note>>(
-        listOf(
+    }
+    fun getDraft(): List<Note> {
+        return listOf(
             Note(
                 id = 1,
-                title = "Fragment draft",
+                title = "Fragment Draft",
                 content = "content",
                 createAt = Calendar.getInstance().time,
                 modifiedAt = Calendar.getInstance().time
             ),
             Note(
                 id = 2,
-                title = "Activity draft",
+                title = "Activity Draft",
                 content = "content",
                 createAt = Calendar.getInstance().time,
                 modifiedAt = Calendar.getInstance().time
             )
         )
-    )
+    }
 }

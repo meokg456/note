@@ -1,10 +1,10 @@
 package com.meokg456.note
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.AlarmClock
 import android.provider.ContactsContract
@@ -12,35 +12,35 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.meokg456.note.core.Note
+import com.meokg456.note.databinding.ActivityNoteDetailBinding
+import com.meokg456.note.model.Note
+import com.meokg456.note.uistate.NoteUiState
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
 
 const val NOTE_TITLE = "com.meokg456.note.TITLE"
 const val NOTE_CONTENT = "com.meokg456.note.CONTENT"
 const val REQUEST_IMAGE_CAPTURE = 1
 const val REQUEST_CAMERA = 2
 
+@AndroidEntryPoint
 class NoteDetail : AppCompatActivity() {
 
-    private lateinit var titleEditText: EditText
-    private lateinit var contentEditText: EditText
-
+    private lateinit var binding: ActivityNoteDetailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_note_detail)
+        binding = ActivityNoteDetailBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         setSupportActionBar(findViewById(R.id.note_toolbar))
         val title = intent.getStringExtra(NOTE_TITLE) ?: ""
         val content = intent.getStringExtra(NOTE_CONTENT) ?: ""
-        titleEditText = findViewById(R.id.editTitle)
-        titleEditText.setText(title)
-        contentEditText = findViewById(R.id.editContent)
-        contentEditText.setText(content)
+        binding.editTitle.setText(title)
+        binding.editContent.setText(content)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -80,7 +80,17 @@ class NoteDetail : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.save_note -> {
-            // User chose the "Settings" item, show the app settings UI...
+            setResult(Activity.RESULT_OK, Intent().apply {
+                putExtra("note",            Note(
+                    Random().nextInt(),
+                    binding.editTitle.text.toString(),
+                    binding.editContent.text.toString(),
+                    Calendar.getInstance().time,
+                    Calendar.getInstance().time,
+                )
+                )
+            })
+            finish()
             true
         }
         R.id.set_alarm -> {
