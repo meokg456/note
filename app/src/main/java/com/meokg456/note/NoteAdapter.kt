@@ -8,30 +8,27 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.meokg456.note.databinding.NoteLayoutBinding
 import com.meokg456.note.uistate.NoteUiState
 import java.text.SimpleDateFormat
 
 class NoteAdapter(private val data: List<NoteUiState>) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
-        private val titleTextView = view.findViewById<TextView>(R.id.title)
-        private val timeTextView = view.findViewById<TextView>(R.id.time)
-        private val shareImageButton = view.findViewById<ImageButton>(R.id.share_button)
+    class ViewHolder(private val binding: NoteLayoutBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
         private var currentNoteUiState : NoteUiState? = null
-        private val recourses = view.resources
         init {
-            shareImageButton.setOnClickListener(this)
+            binding.shareButton.setOnClickListener(this)
         }
 
-        @SuppressLint("SimpleDateFormat")
         fun bind(noteUiState: NoteUiState) {
-            titleTextView.text = noteUiState.title
+             binding.title.text = noteUiState.title
             currentNoteUiState = noteUiState
 
             if(noteUiState.modifiedAt == null) {
-                timeTextView.text =  recourses.getString(R.string.created_at, noteUiState.createAt)
+                binding.time.text =  itemView.context.getString(R.string.created_at, noteUiState.createAt)
             }
             else {
-                timeTextView.text =  recourses.getString(R.string.modified_at, noteUiState.modifiedAt)
+                binding.time.text =  itemView.context.getString(R.string.modified_at, noteUiState.modifiedAt)
             }
 
         }
@@ -49,10 +46,8 @@ class NoteAdapter(private val data: List<NoteUiState>) : RecyclerView.Adapter<No
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.note_layout, parent, false)
-
-        return ViewHolder(view)
+        val binding = NoteLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

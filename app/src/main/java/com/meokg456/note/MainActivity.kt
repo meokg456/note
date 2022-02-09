@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initBottomNavigation()
         val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -47,8 +49,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initBottomNavigation() {
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.bottomNavigation
 
@@ -63,6 +63,4 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
-
-
 }
