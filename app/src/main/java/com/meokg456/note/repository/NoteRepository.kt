@@ -13,4 +13,8 @@ class NoteRepository @Inject constructor (private val noteLocalDataSource: NoteL
         return noteLocalDataSource.getDraft()
     }
 
+    override fun addNote(note: Note) : Long {
+        return noteLocalDataSource.addNote(note)
+    }
+
 }

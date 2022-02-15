@@ -7,8 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class FetchNotesUseCase @Inject constructor (private val noteRepository: INoteRepository, private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default) {
-    suspend operator fun invoke(): List<Note> = (withContext(defaultDispatcher) {
+class FetchNotesUseCase @Inject constructor (private val noteRepository: INoteRepository, private val defaultDispatcher: CoroutineDispatcher) {
+    suspend operator fun invoke(): List<Note> = withContext(defaultDispatcher) {
         noteRepository.getNotes()
-    })
+    }
 }

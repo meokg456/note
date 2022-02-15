@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class FetchDraftsUseCase @Inject constructor (private val noteRepository: INoteRepository, private val defaultDispatcher: CoroutineDispatcher) {
-    suspend operator fun invoke(): List<Note> = (withContext(defaultDispatcher) {
+    suspend operator fun invoke(): List<Note> = withContext(defaultDispatcher) {
         noteRepository.getDraft()
-    })
+    }
 }

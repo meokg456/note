@@ -35,10 +35,9 @@ class Draft : Fragment(R.layout.fragment_draft) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                notesViewModel.uiState.map { it.drafts }.distinctUntilChanged().collect {
+                notesViewModel.drafts.collect {
                     val noteAdapter = NoteAdapter(it)
                     binding.draftList.adapter = noteAdapter
-
                 }
             }
         }

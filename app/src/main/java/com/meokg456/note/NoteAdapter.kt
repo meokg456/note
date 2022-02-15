@@ -1,47 +1,48 @@
 package com.meokg456.note
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.meokg456.note.databinding.NoteLayoutBinding
-import com.meokg456.note.uistate.NoteUiState
-import java.text.SimpleDateFormat
+import com.meokg456.note.model.Note
 
-class NoteAdapter(private val data: List<NoteUiState>) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
-    class ViewHolder(private val binding: NoteLayoutBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+class NoteAdapter(private val data: List<Note>) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
+    class ViewHolder(private val binding: NoteLayoutBinding) : RecyclerView.ViewHolder(binding.root){
 
-        private var currentNoteUiState : NoteUiState? = null
+        private var currentNote : Note? = null
+
         init {
-            binding.shareButton.setOnClickListener(this)
+            binding.shareButton.setOnClickListener { onShareClick(it) }
         }
 
-        fun bind(noteUiState: NoteUiState) {
-             binding.title.text = noteUiState.title
-            currentNoteUiState = noteUiState
+        fun bind(note: Note) {
+            binding.title.text = note.title
+            currentNote = note
 
-            if(noteUiState.modifiedAt == null) {
-                binding.time.text =  itemView.context.getString(R.string.created_at, noteUiState.createAt)
+            if(note.modifiedAt == null) {
+                binding.time.text =  itemView.context.getString(R.string.created_at, note.createAt)
             }
             else {
-                binding.time.text =  itemView.context.getString(R.string.modified_at, noteUiState.modifiedAt)
+                binding.time.text =  itemView.context.getString(R.string.modified_at, note.modifiedAt)
+            }
+
+            itemView.setOnClickListener{
+                currentNote?.onTap?.invoke()
             }
 
         }
 
-        override fun onClick(view: View?) {
+        private fun onShareClick(view: View) {
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_SUBJECT, currentNoteUiState?.title)
-                putExtra(Intent.EXTRA_TEXT, currentNoteUiState?.content)
+                putExtra(Intent.EXTRA_SUBJECT, currentNote?.title)
+                putExtra(Intent.EXTRA_TEXT, currentNote?.content)
                 type = "text/plain"
             }
             val shareIntent = Intent.createChooser(sendIntent, "Share your note")
-            view?.context?.startActivity(shareIntent)
+            view.context?.startActivity(shareIntent)
         }
     }
 

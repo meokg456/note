@@ -15,7 +15,6 @@ import com.meokg456.note.databinding.ActivityMainBinding
 import com.meokg456.note.viewmodel.NotesViewModel
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.meokg456.note.model.Note
-import com.meokg456.note.uistate.NoteUiState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,21 +23,22 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val notesModel: NotesViewModel by viewModels()
 
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val intent = result.data
+            if (intent != null) {
+                val note = intent.getSerializableExtra(NOTE) as Note
+                notesModel.addNote(note)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initBottomNavigation()
-        val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val intent = result.data
-                if(intent != null) {
-                    val note = intent.getSerializableExtra("note") as Note
-                    notesModel.addNote(note)
-                }
-                // Handle the Intent
-            }
-        }
+
         binding.addNote.setOnClickListener{
             val intent = Intent(this, NoteDetail::class.java)
             startForResult.launch(intent)

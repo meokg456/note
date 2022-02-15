@@ -1,10 +1,10 @@
 package com.meokg456.note.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.meokg456.note.model.Note
-import com.meokg456.note.uistate.NoteUiState
-import com.meokg456.note.uistate.NotesUiState
+import com.meokg456.note.usecase.AddNoteUseCase
 import com.meokg456.note.usecase.FetchDraftsUseCase
 import com.meokg456.note.usecase.FetchNotesUseCase
 import com.meokg456.note.usecase.FormatDateUseCase
@@ -19,59 +19,44 @@ import javax.inject.Inject
 @HiltViewModel
 class NotesViewModel @Inject constructor (
     private val fetchNotesUseCase: FetchNotesUseCase,
-    private val fetchDraftsUseCase: FetchDraftsUseCase,
-    private val formatDateUseCase: FormatDateUseCase) : ViewModel() {
+    private val fetchDraftsUseCase: FetchDraftsUseCase) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(NotesUiState())
-
-    val uiState: StateFlow<NotesUiState> = _uiState.asStateFlow()
+    val notes = MutableStateFlow<List<Note>>(listOf())
+    val drafts = MutableStateFlow<List<Note>>(listOf())
 
     fun fetchNotes() {
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(notes = fetchNotesUseCase().map { note ->
-                    NoteUiState(
-                        id = note.id,
-                        title = note.title,
-                        content = note.content,
-                        createAt = formatDateUseCase(note.createAt),
-                        modifiedAt = formatDateUseCase(note.modifiedAt)
-                    )
-                })
+            notes.update {
+                fetchNotesUseCase()
             }
         }
     }
 
     fun fetchDrafts() {
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(drafts = fetchDraftsUseCase().map { note ->
-                    NoteUiState(
-                        id = note.id,
-                        title = note.title,
-                        content = note.content,
-                        createAt = formatDateUseCase(note.createAt),
-                        modifiedAt = formatDateUseCase(note.modifiedAt)
-                    )
-                })
+            drafts.update {
+                fetchDraftsUseCase()
             }
         }
     }
 
     fun addNote(note: Note) {
         viewModelScope.launch {
-            _uiState.update {
-                val notes = _uiState.value.notes.toMutableList()
-                notes.add(
-                    NoteUiState(
-                        id = note.id,
-                        title = note.title,
-                        content = note.content,
-                        createAt = formatDateUseCase(note.createAt),
-                        modifiedAt = formatDateUseCase(note.modifiedAt)
-                    )
-                )
-                it.copy(notes = notes)
+            notes.update {
+                val notesList = it.toMutableList()
+                notesList.add(note)
+                notesList.toList()
+            }
+        }
+    }
+    fun updateNote(note: Note) {
+        viewModelScope.launch {
+            notes.update {
+                val notesList = it.toMutableList()
+                val index = notesList.indexOfFirst { element -> element.id == note.id }
+                Log.d("Debug", note.title)
+                notesList[index] = note
+                notesList.toList()
             }
         }
     }
