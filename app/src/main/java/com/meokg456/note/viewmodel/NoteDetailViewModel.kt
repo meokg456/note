@@ -19,7 +19,6 @@ class NoteDetailViewModel @Inject constructor (private val addNoteUseCase: AddNo
     fun save() {
         runBlocking {
             note.id = addNoteUseCase(note)
-            Log.d("Debug", note.id.toString())
         }
     }
 }

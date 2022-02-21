@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".NoteDetail"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical">
-
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.meokg456.note.viewmodel.NoteDetailViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/note_toolbar"
         android:layout_width="match_parent"
@@ -15,7 +20,8 @@
         android:background="?attr/colorPrimary"
         app:titleTextColor="?attr/colorOnPrimary"
         android:theme="@style/Theme.Note"
-        app:menu="@menu/app_bar_actions"/>
+        app:menu="@menu/app_bar_actions"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,7 +36,8 @@
             android:inputType="text"
             android:autofillHints="Title"
             tools:ignore="LabelFor"
-            android:hint="@string/title"/>
+            android:hint="@string/title"
+            android:text="@={viewModel.note.title}"/>
 
         <EditText
             android:id="@+id/editContent"
@@ -41,9 +48,8 @@
             android:inputType="textMultiLine"
             android:autofillHints="Content"
             android:hint="@string/content"
-            tools:ignore="LabelFor" />
-
-
-
+            tools:ignore="LabelFor"
+            android:text="@={viewModel.note.content}"/>
     </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+</layout>

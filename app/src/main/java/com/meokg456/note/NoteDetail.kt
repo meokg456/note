@@ -49,14 +49,11 @@ class NoteDetail : AppCompatActivity() {
         noteDetailViewModel.isEditing = intent.getBooleanExtra(EDIT_MODE, false)
         if(noteDetailViewModel.isEditing) {
             noteDetailViewModel.note = intent.getSerializableExtra(NOTE) as Note
-            binding.editTitle.setText(noteDetailViewModel.note.title)
-            binding.editContent.setText(noteDetailViewModel.note.content)
         } else {
-            val title = intent.getStringExtra(NOTE_TITLE) ?: ""
-            val content = intent.getStringExtra(NOTE_CONTENT) ?: ""
-            binding.editTitle.setText(title)
-            binding.editContent.setText(content)
+            noteDetailViewModel.note.title = intent.getStringExtra(NOTE_TITLE) ?: ""
+            noteDetailViewModel.note.content = intent.getStringExtra(NOTE_CONTENT) ?: ""
         }
+        binding.viewModel = noteDetailViewModel
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -101,8 +98,6 @@ class NoteDetail : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.save_note -> {
-            noteDetailViewModel.note.title = binding.editTitle.text.toString()
-            noteDetailViewModel.note.content = binding.editContent.text.toString()
             if(noteDetailViewModel.isEditing) {
                 noteDetailViewModel.note.modifiedAt = Date()
             } else {
