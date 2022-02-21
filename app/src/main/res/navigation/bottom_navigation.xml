@@ -8,11 +8,11 @@
     <fragment
         android:id="@+id/notes"
         android:name="com.meokg456.note.Notes"
-        android:label="fragment_notes"
+        android:label="Notes"
         tools:layout="@layout/fragment_notes" />
     <fragment
         android:id="@+id/draft"
         android:name="com.meokg456.note.Draft"
-        android:label="fragment_draft"
+        android:label="Drafts"
         tools:layout="@layout/fragment_draft" />
 </navigation>

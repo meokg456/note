@@ -54,7 +54,6 @@ class NotesViewModel @Inject constructor (
             notes.update {
                 val notesList = it.toMutableList()
                 val index = notesList.indexOfFirst { element -> element.id == note.id }
-                Log.d("Debug", note.title)
                 notesList[index] = note
                 notesList.toList()
             }
