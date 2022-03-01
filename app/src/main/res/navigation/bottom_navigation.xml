@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/notes"
-        android:name="com.meokg456.note.Notes"
+        android:name="com.meokg456.note.ui.Notes"
         android:label="Notes"
         tools:layout="@layout/fragment_notes" />
     <fragment
         android:id="@+id/draft"
-        android:name="com.meokg456.note.Draft"
+        android:name="com.meokg456.note.ui.Draft"
         android:label="Drafts"
         tools:layout="@layout/fragment_draft" />
 </navigation>

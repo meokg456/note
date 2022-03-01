@@ -1,4 +1,4 @@
-package com.meokg456.note
+package com.meokg456.note.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -14,7 +14,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.meokg456.note.databinding.ActivityMainBinding
 import com.meokg456.note.viewmodel.NotesViewModel
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.meokg456.note.R
 import com.meokg456.note.model.Note
+import com.meokg456.note.ui.lifecycleawarecomponent.ActivityObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,8 +24,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val notesModel: NotesViewModel by viewModels()
+    private lateinit var activityObserver: ActivityObserver
 
-    val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
             val intent = result.data
             if (intent != null) {
@@ -35,6 +38,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activityObserver = ActivityObserver()
+        lifecycle.addObserver(activityObserver)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initBottomNavigation()

@@ -1,4 +1,4 @@
-package com.meokg456.note
+package com.meokg456.note.ui
 
 import android.Manifest
 import android.app.Activity
@@ -17,20 +17,18 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import com.meokg456.note.CountDemo
+import com.meokg456.note.R
 import com.meokg456.note.databinding.ActivityNoteDetailBinding
 import com.meokg456.note.model.Note
 import com.meokg456.note.viewmodel.NoteDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import java.util.*
 
 const val NOTE_TITLE = "com.meokg456.note.TITLE"
 const val NOTE_CONTENT = "com.meokg456.note.CONTENT"
-const val EDIT_MODE = "com.meokg456.note.EDIT_MODE"
-const val NOTE = "com.meokg456.note.NOTE"
+const val EDIT_MODE = "com.meokg456.note.ui.EDIT_MODE"
+const val NOTE = "com.meokg456.note.ui.NOTE"
 const val REQUEST_IMAGE_CAPTURE = 1
 const val REQUEST_CAMERA = 2
 
@@ -168,6 +166,11 @@ class NoteDetail : AppCompatActivity() {
                     )
                 }
             }
+            true
+        }
+        R.id.count_demo -> {
+            val intent = Intent(this, CountDemo::class.java)
+            startActivity(intent)
             true
         }
 

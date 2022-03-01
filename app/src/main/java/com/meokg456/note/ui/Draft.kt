@@ -1,4 +1,4 @@
-package com.meokg456.note
+package com.meokg456.note.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,12 +9,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.meokg456.note.R
 import com.meokg456.note.databinding.FragmentDraftBinding
 import com.meokg456.note.viewmodel.NotesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

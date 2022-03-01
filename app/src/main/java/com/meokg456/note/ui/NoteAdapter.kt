@@ -1,10 +1,11 @@
-package com.meokg456.note
+package com.meokg456.note.ui
 
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.meokg456.note.R
 import com.meokg456.note.databinding.NoteLayoutBinding
 import com.meokg456.note.model.Note
 
