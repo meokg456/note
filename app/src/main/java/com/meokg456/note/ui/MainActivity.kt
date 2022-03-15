@@ -1,12 +1,20 @@
 package com.meokg456.note.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -18,12 +26,16 @@ import com.meokg456.note.R
 import com.meokg456.note.model.Note
 import com.meokg456.note.ui.lifecycleawarecomponent.ActivityObserver
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val notesModel: NotesViewModel by viewModels()
     private lateinit var activityObserver: ActivityObserver
 
 
@@ -34,11 +46,29 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initBottomNavigation()
+        val darkMode = booleanPreferencesKey("dark_mode")
+        val darkModeFlow: Flow<Boolean> = dataStore.data
+            .map { preferences ->
+                // No type safety.
+                preferences[darkMode] ?: false
+            }
+        lifecycleScope.launchWhenCreated {
+            darkModeFlow.collectLatest {
+                Log.d("Dark mode", if(it) "true" else "false")
+            }
+        }
 
         binding.addNote.setOnClickListener{
             val intent = Intent(this, NoteDetail::class.java)
             startActivity(intent)
+            lifecycleScope.launch {
+                dataStore.edit { settings ->
+                    val current = settings[darkMode] ?: false
+                    settings[darkMode] = !current
+                }
+            }
         }
+
     }
 
 
