@@ -17,7 +17,6 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.meokg456.note.CountDemo
 import com.meokg456.note.R
 import com.meokg456.note.databinding.ActivityNoteDetailBinding
 import com.meokg456.note.model.Note

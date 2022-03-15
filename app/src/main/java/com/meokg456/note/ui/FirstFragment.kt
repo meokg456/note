@@ -1,4 +1,4 @@
-package com.meokg456.note
+package com.meokg456.note.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.meokg456.note.R
 import com.meokg456.note.databinding.FragmentFirstBinding
 
 /**

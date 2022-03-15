@@ -1,11 +1,6 @@
-package com.meokg456.note
+package com.meokg456.note.ui
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
-import androidx.activity.viewModels
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.meokg456.note.R
 import com.meokg456.note.databinding.ActivityCountDemoBinding
 import com.meokg456.note.viewmodel.CountViewModel
 import com.meokg456.note.viewmodel.CountViewModelFactory

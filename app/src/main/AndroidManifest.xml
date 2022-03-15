@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Note" >
         <activity
-            android:name=".CountDemo"
+            android:name=".ui.CountDemo"
             android:exported="false"
             android:label="@string/title_activity_count_demo"
             android:theme="@style/Theme.Note.NoActionBar" />
