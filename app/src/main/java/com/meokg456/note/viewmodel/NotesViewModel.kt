@@ -3,6 +3,9 @@ package com.meokg456.note.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.meokg456.note.model.Note
 import com.meokg456.note.usecase.AddNoteUseCase
 import com.meokg456.note.usecase.FetchDraftsUseCase
@@ -18,45 +21,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotesViewModel @Inject constructor (
-    private val fetchNotesUseCase: FetchNotesUseCase,
-    private val fetchDraftsUseCase: FetchDraftsUseCase) : ViewModel() {
+    fetchNotesUseCase: FetchNotesUseCase,
+    fetchDraftsUseCase: FetchDraftsUseCase) : ViewModel() {
 
-    val notes = MutableStateFlow<List<Note>>(listOf())
-    val drafts = MutableStateFlow<List<Note>>(listOf())
+    val notes = fetchNotesUseCase(pageSize = 10).cachedIn(viewModelScope)
+    val drafts = fetchDraftsUseCase(pageSize = 10).cachedIn(viewModelScope)
 
-    fun fetchNotes() {
-        viewModelScope.launch {
-            notes.update {
-                fetchNotesUseCase()
-            }
-        }
-    }
 
-    fun fetchDrafts() {
-        viewModelScope.launch {
-            drafts.update {
-                fetchDraftsUseCase()
-            }
-        }
-    }
-
-    fun addNote(note: Note) {
-        viewModelScope.launch {
-            notes.update {
-                val notesList = it.toMutableList()
-                notesList.add(note)
-                notesList.toList()
-            }
-        }
-    }
-    fun updateNote(note: Note) {
-        viewModelScope.launch {
-            notes.update {
-                val notesList = it.toMutableList()
-                val index = notesList.indexOfFirst { element -> element.id == note.id }
-                notesList[index] = note
-                notesList.toList()
-            }
-        }
-    }
 }

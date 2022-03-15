@@ -4,12 +4,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.meokg456.note.R
 import com.meokg456.note.databinding.NoteLayoutBinding
 import com.meokg456.note.model.Note
 
-class NoteAdapter(private val data: List<Note>) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
+class NoteAdapter(diffCallback: DiffUtil.ItemCallback<Note>) : PagingDataAdapter<Note, NoteAdapter.ViewHolder>(diffCallback) {
     class ViewHolder(private val binding: NoteLayoutBinding) : RecyclerView.ViewHolder(binding.root){
 
         private var currentNote : Note? = null
@@ -18,12 +20,12 @@ class NoteAdapter(private val data: List<Note>) : RecyclerView.Adapter<NoteAdapt
             binding.shareButton.setOnClickListener { onShareClick(it) }
         }
 
-        fun bind(note: Note) {
-            binding.title.text = note.title
+        fun bind(note: Note?) {
+            binding.title.text = note?.title ?: ""
             currentNote = note
 
-            if(note.modifiedAt == null) {
-                binding.time.text =  itemView.context.getString(R.string.created_at, note.createAt)
+            if(note?.modifiedAt == null) {
+                binding.time.text =  itemView.context.getString(R.string.created_at, note?.createAt)
             }
             else {
                 binding.time.text =  itemView.context.getString(R.string.modified_at, note.modifiedAt)
@@ -53,11 +55,18 @@ class NoteAdapter(private val data: List<Note>) : RecyclerView.Adapter<NoteAdapt
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val note = data[position]
+        val note = getItem(position)
         holder.bind(note)
     }
 
-    override fun getItemCount(): Int {
-        return data.size
+}
+object NoteComparator : DiffUtil.ItemCallback<Note>() {
+    override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
+        // Id is unique.
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
+        return oldItem == newItem
     }
 }

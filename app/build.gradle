@@ -41,6 +41,7 @@ ext {
     lifecycle_version = "2.4.0"
     arch_version = "2.1.0"
     roomVersion = "2.4.1"
+    paging_version = "3.1.1"
 }
 
 dependencies {
@@ -114,6 +115,11 @@ dependencies {
 
     // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:2.4.1")
+
+    implementation("androidx.paging:paging-runtime:$paging_version")
+
+    // alternatively - without Android dependencies for tests
+    testImplementation("androidx.paging:paging-common:$paging_version")
 }
 kapt {
     correctErrorTypes = true

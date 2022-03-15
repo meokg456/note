@@ -7,6 +7,7 @@ import com.meokg456.note.model.Note
 import com.meokg456.note.usecase.AddNoteUseCase
 import com.meokg456.note.usecase.FormatDateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -17,7 +18,7 @@ class NoteDetailViewModel @Inject constructor (private val addNoteUseCase: AddNo
     var isEditing = false
 
     fun save() {
-        runBlocking {
+        viewModelScope.launch {
             note.id = addNoteUseCase(note)
         }
     }

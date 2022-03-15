@@ -26,15 +26,6 @@ class MainActivity : AppCompatActivity() {
     private val notesModel: NotesViewModel by viewModels()
     private lateinit var activityObserver: ActivityObserver
 
-    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val intent = result.data
-            if (intent != null) {
-                val note = intent.getSerializableExtra(NOTE) as Note
-                notesModel.addNote(note)
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,10 +37,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.addNote.setOnClickListener{
             val intent = Intent(this, NoteDetail::class.java)
-            startForResult.launch(intent)
+            startActivity(intent)
         }
-        notesModel.fetchNotes()
-        notesModel.fetchDrafts()
     }
 
 

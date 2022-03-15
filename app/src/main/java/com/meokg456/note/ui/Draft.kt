@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class Draft : Fragment(R.layout.fragment_draft) {
     private val notesViewModel: NotesViewModel by activityViewModels()
+    private val pagingAdapter = NoteAdapter(NoteComparator)
     private var _binding: FragmentDraftBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -31,11 +32,11 @@ class Draft : Fragment(R.layout.fragment_draft) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.draftList.adapter = pagingAdapter
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 notesViewModel.drafts.collect {
-                    val noteAdapter = NoteAdapter(it)
-                    binding.draftList.adapter = noteAdapter
+                    pagingAdapter.submitData(it)
                 }
             }
         }
