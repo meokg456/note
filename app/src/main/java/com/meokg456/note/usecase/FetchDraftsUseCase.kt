@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class FetchDraftsUseCase @Inject constructor (private val noteRepository: INoteRepository, private val defaultDispatcher: CoroutineDispatcher) {
+class FetchDraftsUseCase @Inject constructor (private val noteRepository: INoteRepository) {
     operator fun invoke(pageSize: Int): Flow<PagingData<Note>> =
         noteRepository.getDraft(pageSize)
 

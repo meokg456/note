@@ -26,6 +26,4 @@ class NotesViewModel @Inject constructor (
 
     val notes = fetchNotesUseCase(pageSize = 10).cachedIn(viewModelScope)
     val drafts = fetchDraftsUseCase(pageSize = 10).cachedIn(viewModelScope)
-
-
 }
