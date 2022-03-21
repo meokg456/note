@@ -23,6 +23,9 @@ import com.meokg456.note.databinding.ActivityMainBinding
 import com.meokg456.note.viewmodel.NotesViewModel
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.meokg456.note.R
+import com.meokg456.note.Settings
+import com.meokg456.note.User
+import com.meokg456.note.appconfig.settingsDataStore
 import com.meokg456.note.model.Note
 import com.meokg456.note.ui.lifecycleawarecomponent.ActivityObserver
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,6 +60,11 @@ class MainActivity : AppCompatActivity() {
                 Log.d("Dark mode", if(it) "true" else "false")
             }
         }
+        lifecycleScope.launchWhenCreated {
+            settingsDataStore.data.collectLatest {
+                Log.d("User Proto", it.user.name + " " + it.user.age)
+            }
+        }
 
         binding.addNote.setOnClickListener{
             val intent = Intent(this, NoteDetail::class.java)
@@ -65,6 +73,9 @@ class MainActivity : AppCompatActivity() {
                 dataStore.edit { settings ->
                     val current = settings[darkMode] ?: false
                     settings[darkMode] = !current
+                }
+                settingsDataStore.updateData {
+                    it.toBuilder().setUser(User.newBuilder().setName("Dung").setAge(10)).build()
                 }
             }
         }
