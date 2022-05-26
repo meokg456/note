@@ -7,6 +7,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.meokg456.note.model.Note
+import com.meokg456.note.repository.INoteRepository
 import com.meokg456.note.usecase.AddNoteUseCase
 import com.meokg456.note.usecase.FetchDraftsUseCase
 import com.meokg456.note.usecase.FetchNotesUseCase
@@ -22,8 +23,12 @@ import javax.inject.Inject
 @HiltViewModel
 class NotesViewModel @Inject constructor (
     fetchNotesUseCase: FetchNotesUseCase,
-    fetchDraftsUseCase: FetchDraftsUseCase) : ViewModel() {
+    fetchDraftsUseCase: FetchDraftsUseCase, private val noteRepository: INoteRepository) : ViewModel() {
 
     val notes = fetchNotesUseCase(pageSize = 10).cachedIn(viewModelScope)
     val drafts = fetchDraftsUseCase(pageSize = 10).cachedIn(viewModelScope)
+
+    fun fetchNoteTotalPeriodically() {
+        noteRepository.fetchTotalNotesPeriodically()
+    }
 }

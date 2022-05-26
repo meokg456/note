@@ -8,4 +8,7 @@
     <item android:id="@+id/insert_contact" android:title="@string/insert_contact" app:showAsAction="never" />
     <item android:id="@+id/camera_permission" android:title="@string/request_camera_permission" app:showAsAction="never" />
     <item android:id="@+id/count_demo" android:title="@string/count_demo" app:showAsAction="never" />
+    <item android:id="@+id/backgroundThreadSave" android:title="@string/save_with_background_thread" app:showAsAction="never" />
+    <item android:id="@+id/alarmManagerInexact" android:title="@string/set_inexact_alarm" app:showAsAction="never" />
+    <item android:id="@+id/startForeground" android:title="@string/start_foreground" app:showAsAction="never" />
 </menu>

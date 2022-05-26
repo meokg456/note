@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.meokg456.note" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.meokg456.note">
 
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -16,7 +18,25 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Note" >
+        android:theme="@style/Theme.Note">
+        <service
+            android:name=".ForegroundServices"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <receiver
+            android:name=".broadcastreceivers.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED"/> -->
+            <!-- </intent-filter> -->
+        </receiver>
+
+        <activity
+            android:name=".ui.BackgroundTask"
+            android:exported="false" />
         <activity
             android:name=".ui.CountDemo"
             android:exported="false"
@@ -25,7 +45,7 @@
         <activity
             android:name=".ui.NoteDetail"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="com.meokg456.note.ADD_NOTE" />
 
@@ -36,13 +56,17 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- If you want to disable android.startup completely. -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove" />
     </application>
 
 </manifest>

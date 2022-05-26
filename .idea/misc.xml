@@ -19,6 +19,8 @@
         <entry key="..\:/Users/Sword Fish/StudioProjects/Note/app/src/main/res/menu/app_bar_actions.xml" value="0.3625" />
         <entry key="..\:/Users/Sword Fish/StudioProjects/Note/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Sword Fish/StudioProjects/Note/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.20260416666666667" />
+        <entry key="app/src/main/res/layout/activity_background_task.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/activity_count_demo.xml" value="0.19429347826086957" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29483695652173914" />
         <entry key="app/src/main/res/layout/activity_note_detail.xml" value="0.18229166666666666" />
         <entry key="app/src/main/res/layout/fragment_draft.xml" value="0.18229166666666666" />
@@ -30,6 +32,7 @@
       </map>
     </option>
   </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

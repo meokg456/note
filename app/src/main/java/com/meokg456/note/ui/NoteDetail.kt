@@ -2,10 +2,15 @@ package com.meokg456.note.ui
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlarmManager
+import android.app.Notification
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.provider.AlarmClock
 import android.provider.ContactsContract
 import android.provider.MediaStore
@@ -17,6 +22,8 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.meokg456.note.ForegroundServices
+import com.meokg456.note.broadcastreceivers.AlarmReceiver
 import com.meokg456.note.R
 import com.meokg456.note.databinding.ActivityNoteDetailBinding
 import com.meokg456.note.model.Note
@@ -92,7 +99,7 @@ class NoteDetail : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.save_note -> {
             if(noteDetailViewModel.isEditing) {
@@ -172,7 +179,43 @@ class NoteDetail : AppCompatActivity() {
             startActivity(intent)
             true
         }
+        R.id.backgroundThreadSave -> {
+            if(noteDetailViewModel.isEditing) {
+                noteDetailViewModel.note.modifiedAt = Date()
+            } else {
+                noteDetailViewModel.note.createAt = Calendar.getInstance().time
+            }
+            noteDetailViewModel.saveWithBackgroundThread()
+            setResult(Activity.RESULT_OK, Intent().apply {
+                putExtra(
+                    EDIT_MODE, noteDetailViewModel.isEditing
+                )
+                putExtra(
+                    NOTE, noteDetailViewModel.note
+                )
+            })
+            finish()
+            true
+        }
 
+        R.id.alarmManagerInexact -> {
+            val alarmMgr = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val alarmIntent = Intent(applicationContext, AlarmReceiver::class.java).let { intent ->
+                PendingIntent.getBroadcast(applicationContext, 0, intent, 0)
+            }
+
+            alarmMgr.setExact(
+                AlarmManager.RTC_WAKEUP,
+                SystemClock.elapsedRealtime() + 10 * 1000,
+                alarmIntent
+            )
+            true
+        }
+        R.id.startForeground -> {
+            val intent = Intent(applicationContext, ForegroundServices::class.java) // Build the intent for the service
+            applicationContext.startForegroundService(intent)
+            true
+        }
         else -> {
             // If we got here, the user's action was not recognized.
             // Invoke the superclass to handle it.

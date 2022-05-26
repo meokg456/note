@@ -4,12 +4,9 @@ import com.meokg456.note.repository.INoteRepository
 import com.meokg456.note.repository.NoteRepository
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import java.util.concurrent.Executor
 import javax.inject.Singleton
 
 @Module
@@ -20,5 +17,4 @@ abstract class NoteModule {
     abstract fun bindINoteRepository(
         noteRepository: NoteRepository
     ): INoteRepository
-
 }

@@ -22,6 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.meokg456.note.databinding.ActivityMainBinding
 import com.meokg456.note.viewmodel.NotesViewModel
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.work.WorkManager
 import com.meokg456.note.R
 import com.meokg456.note.Settings
 import com.meokg456.note.User
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                 // No type safety.
                 preferences[darkMode] ?: false
             }
+
         lifecycleScope.launchWhenCreated {
             darkModeFlow.collectLatest {
                 Log.d("Dark mode", if(it) "true" else "false")
@@ -65,7 +67,6 @@ class MainActivity : AppCompatActivity() {
                 Log.d("User Proto", it.user.name + " " + it.user.age)
             }
         }
-
         binding.addNote.setOnClickListener{
             val intent = Intent(this, NoteDetail::class.java)
             startActivity(intent)

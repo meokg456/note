@@ -8,4 +8,7 @@ interface INoteRepository {
     fun getNotes(pageSize: Int): Flow<PagingData<Note>>
     fun getDraft(pageSize: Int): Flow<PagingData<Note>>
     fun addNote(note: Note) : Long
+    fun addNoteWithBackgroundThread(note: Note, callback: (Long) -> Unit)
+    fun getTotalNotes() : Int
+    fun fetchTotalNotesPeriodically()
 }

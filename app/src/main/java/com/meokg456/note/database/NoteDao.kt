@@ -13,4 +13,6 @@ interface NoteDao : BaseDao<Note> {
     fun getDrafts(limit: Int, offset: Int): List<Note>
     @Query("SELECT * FROM notes WHERE id = :id")
     fun getNote(id: Int): Note
+    @Query("SELECT COUNT(*) FROM notes WHERE isDraft = 0")
+    fun getTotalNotes(): Int
 }
