@@ -90,15 +90,14 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.41")
     kapt("com.google.dagger:hilt-android-compiler:2.41")
 
-    testImplementation 'org.robolectric:robolectric:4.4'
-    androidTestImplementation 'org.robolectric:robolectric:4.4'
+    testImplementation('org.robolectric:robolectric:4.4')
+//    androidTestImplementation('org.robolectric:robolectric:4.4')
     // For Robolectric tests.
     testImplementation("com.google.dagger:hilt-android-testing:2.41")
     // ...with Kotlin.
     kaptTest("com.google.dagger:hilt-android-compiler:2.41")
     // ...with Java.
     testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.41")
-
 
     // For instrumented tests.
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.41")
@@ -153,12 +152,12 @@ dependencies {
 
     testImplementation "androidx.arch.core:core-testing:$coreArchTestingVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$coreArchTestingVersion"
-//    testImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    testImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
 //    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
-//    testImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
-//    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
-//    testImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
-//    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
+    testImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    testImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
     testImplementation "androidx.test.ext:junit:$testExtJunit"
     androidTestImplementation "androidx.test.ext:junit:$testExtJunit"
     testImplementation "androidx.test.uiautomator:uiautomator:$uiAutomatorVersion"
