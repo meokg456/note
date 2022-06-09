@@ -1,6 +1,7 @@
 package com.meokg456.note.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +51,7 @@ class Notes : Fragment(R.layout.fragment_notes) {
                 }
             }
         }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 notesViewModel.fetchNoteTotalPeriodically()
@@ -61,7 +63,7 @@ class Notes : Fragment(R.layout.fragment_notes) {
                     WorkManager.getInstance(it.applicationContext)
                         // requestId is the WorkRequest id
                         .getWorkInfosForUniqueWorkLiveData(TOTAL_NOTE)
-                        .observe(viewLifecycleOwner, { listWorker ->
+                        .observe(viewLifecycleOwner) { listWorker ->
                             for (workInfo in listWorker) {
                                 Toast.makeText(
                                     it.applicationContext,
@@ -81,7 +83,7 @@ class Notes : Fragment(R.layout.fragment_notes) {
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
-                        })
+                        }
                 }
             }
         }

@@ -108,14 +108,6 @@ class NoteDetail : AppCompatActivity() {
                 noteDetailViewModel.note.createAt = Calendar.getInstance().time
             }
             noteDetailViewModel.save()
-            setResult(Activity.RESULT_OK, Intent().apply {
-                putExtra(
-                    EDIT_MODE, noteDetailViewModel.isEditing
-                )
-                putExtra(
-                    NOTE, noteDetailViewModel.note
-                )
-            })
 
             finish()
             true

@@ -28,10 +28,6 @@ class NoteRepository @Inject constructor (
     }.flow
 
     override fun addNote(note: Note): Long {
-        for(i in 1..10) {
-            Thread.sleep(1000)
-            Log.d("Add note","$i")
-        }
         return noteLocalDataSource.addNote(note)
     }
 

@@ -143,7 +143,7 @@ dependencies {
     implementation "com.google.protobuf:protobuf-javalite:3.18.0"
 
     // Kotlin + coroutines
-    implementation("androidx.work:work-runtime-ktx:$work_version")
+    implementation("androidx.work:work-runtime-ktx:$workVersion")
 
     implementation("androidx.hilt:hilt-work:1.0.0")
     // When using Kotlin.

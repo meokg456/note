@@ -22,7 +22,7 @@
         <entry key="app/src/main/res/layout/activity_background_task.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/activity_count_demo.xml" value="0.19429347826086957" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29483695652173914" />
-        <entry key="app/src/main/res/layout/activity_note_detail.xml" value="0.18229166666666666" />
+        <entry key="app/src/main/res/layout/activity_note_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_draft.xml" value="0.18229166666666666" />
         <entry key="app/src/main/res/layout/fragment_notes.xml" value="0.18229166666666666" />
         <entry key="app/src/main/res/layout/note_layout.xml" value="0.33" />
